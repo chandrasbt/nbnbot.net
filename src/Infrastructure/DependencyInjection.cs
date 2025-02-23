@@ -17,6 +17,8 @@ public static class DependencyInjection
     {
         var connectionString = builder.Configuration.GetConnectionString("NbnBotCleanDb");
         Guard.Against.Null(connectionString, message: "Connection string 'NbnBotCleanDb' not found.");
+        var connectionStringNbnBot = builder.Configuration.GetConnectionString("NbnBotDb");
+        Guard.Against.Null(connectionString, message: "Connection string 'NbnBotDb' not found.");
 
         builder.Services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         builder.Services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
@@ -26,12 +28,20 @@ public static class DependencyInjection
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(connectionString);
         });
+        builder.Services.AddDbContext<NbnBotDbContext>((sp, options) =>
+        {
+            options.ConfigureWarnings(wb => wb.Ignore(RelationalEventId.PendingModelChangesWarning));
+			options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+            options.UseSqlServer(connectionStringNbnBot);
+        });
 
 
         builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        builder.Services.AddScoped<INbnBotDbContext>(provider => provider.GetRequiredService<NbnBotDbContext>());
 
         builder.Services.AddScoped<ApplicationDbContextInitialiser>();
-
+        builder.Services.AddScoped<NbnBotDbContextInitialiser>();
+        
         builder.Services.AddAuthentication()
             .AddBearerToken(IdentityConstants.BearerScheme);
 
