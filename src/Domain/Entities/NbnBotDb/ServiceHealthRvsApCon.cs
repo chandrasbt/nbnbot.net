@@ -3,23 +3,19 @@ using System.Collections.Generic;
 
 namespace NbnBotClean.Domain.Entities.NbnBotDb;
 
-public partial class ServiceClass
+public partial class ServiceHealthRvsApCon
 {
     public long Id { get; set; }
 
-    public int? ServiceClass1 { get; set; }
+    public long ServiceHealthRvId { get; set; }
 
-    public string? Technology { get; set; }
+    public string? RvAcName { get; set; }
 
-    public string? Type { get; set; }
-
-    public string? Description { get; set; }
+    public string? RvAcDescription { get; set; }
 
     public string? UpdatedBy { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? CreatedAt { get; set; }
-
-    public string? OrderTypes { get; set; }
 }

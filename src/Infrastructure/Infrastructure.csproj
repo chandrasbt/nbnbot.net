@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\NbnBotDb\**" />
+    <EmbeddedResource Remove="Data\Migrations\NbnBotDb\**" />
+    <None Remove="Data\Migrations\NbnBotDb\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="CsvHelper" />
     <PackageReference Include="EFCore.BulkExtensions.SqlServer" />
@@ -21,10 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\NbnBotDb\" />
   </ItemGroup>
 
   <ItemGroup>
