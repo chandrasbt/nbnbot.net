@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace NbnBotClean.Infrastructure.Data;
 
-public static class InitialiserExtensions
+public static partial class InitialiserExtensions
 {
     public static async Task InitialiseDatabaseAsync(this WebApplication app)
     {
